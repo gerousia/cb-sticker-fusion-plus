@@ -15,7 +15,7 @@ static func patch():
 	var code_index: int = 0
 
 	# # # var
-	
+
 	code_index = code_lines.find("var exchange: Exchange")
 	if code_index >= 0:
 		code_lines.insert(code_index + 1, get_code("init_mod"))
@@ -45,12 +45,18 @@ static func patch():
 	code_index = code_lines.find("	if attributes.size() > MAX_ATTRIBUTES:")
 	if code_index >= 0:
 		code_lines.insert(code_index + 3, get_code("set_item_attributes"))
-
+	
 	# # # func update_output
 
 	code_index = code_lines.find("		exchange.markup_percent = 100 + 100 * output_panel.sticker.item.attributes.size()")
 	if code_index >= 0:
 		code_lines.insert(code_index + 1, get_code("markup_percent_multiplier"))
+
+	# # # func update_fuse_button
+
+	code_index = code_lines.find("""		$"%CostLabel".bbcode_text = exchange.get_cost_bbcode()""")
+	if code_index >= 0:
+		code_lines.insert(code_index + 1, get_code("fuse_button_text"))
 
 	patched_script.source_code = ""
 	for line in code_lines:
@@ -106,5 +112,10 @@ var duplicate_attributes: Dictionary
 		exchange.markup_percent += 100 * mod.StickerFusionHelper.get_upgrade_cost_multiplier(duplicate_attributes)
 """
 
+	# # # func update_fuse_button
+
+	code_blocks["fuse_button_text"] = """
+		$"%FuseButton".text = "STICKER_FUSION_FUSE_UPGRADE_BUTTON" if duplicate_attributes.size() > 0 else "STICKER_FUSION_FUSE_BUTTON"
+"""
 
 	return code_blocks[block]

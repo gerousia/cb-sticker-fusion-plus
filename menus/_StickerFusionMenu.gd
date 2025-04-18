@@ -72,6 +72,7 @@ func update_fuse_button() -> void :
 	if exchange:
 		$"%FuseButton".disabled = false
 		$"%CostLabel".bbcode_text = exchange.get_cost_bbcode()
+		$"%FuseButton".text = "STICKER_FUSION_FUSE_UPGRADE_BUTTON" if duplicate_attributes.size() > 0 else "STICKER_FUSION_FUSE_BUTTON" # # #
 	else:
 		$"%FuseButton".disabled = true
 		$"%CostLabel".bbcode_text = ""
@@ -90,9 +91,9 @@ func fuse_stickers(a: ItemNode, a_attrib: Array, b: ItemNode, b_attrib: Array) -
 	
 	if attributes.size() == 0:
 		return null
-		
+
 	duplicate_attributes = {}
-	
+
 	for i in range(attributes.size()):
 		var attr_i = attributes[i].get_template()
 		for j in range(i + 1, attributes.size()):
@@ -172,4 +173,3 @@ func _on_FuseButton_pressed():
 	$"%CurrencyBox".refresh()
 	yield(MenuHelper.give_item(new_sticker, 1, false), "completed")
 	grab_focus()
-	
