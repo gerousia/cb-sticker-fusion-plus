@@ -11,9 +11,10 @@ onready var output_panel = $"%FusionResultPanel"
 var output: ItemNode
 var exchange: Exchange
 
-# # #
+# # # START
 var mod = DLC.mods_by_id["mod_sticker_fusion_plus"]
-# # #
+var duplicate_attributes: Dictionary
+# # # END
 
 func _ready() -> void :
 	output = ItemNode.new()
@@ -61,6 +62,7 @@ func update_output() -> void :
 		exchange.item = output_panel.sticker.item
 		exchange.max_amount = 1
 		exchange.markup_percent = 100 + 100 * output_panel.sticker.item.attributes.size()
+		exchange.markup_percent += 100 * mod.StickerFusionHelper.get_upgrade_cost_multiplier(duplicate_attributes)
 	else:
 		exchange = null
 	
@@ -70,6 +72,7 @@ func update_fuse_button() -> void :
 	if exchange:
 		$"%FuseButton".disabled = false
 		$"%CostLabel".bbcode_text = exchange.get_cost_bbcode()
+		$"%FuseButton".text = "STICKER_FUSION_FUSE_UPGRADE_BUTTON" if duplicate_attributes.size() > 0 else "STICKER_FUSION_FUSE_BUTTON" # # #
 	else:
 		$"%FuseButton".disabled = true
 		$"%CostLabel".bbcode_text = ""
@@ -88,43 +91,41 @@ func fuse_stickers(a: ItemNode, a_attrib: Array, b: ItemNode, b_attrib: Array) -
 	
 	if attributes.size() == 0:
 		return null
-		
-	var duplicate_attributes: = {} # target: donor
-	
+
+	duplicate_attributes = {}
+
 	for i in range(attributes.size()):
 		var attr_i = attributes[i].get_template()
 		for j in range(i + 1, attributes.size()):
 			var attr_j = attributes[j].get_template()
 			if attr_i == attr_j:
 				
-				# # #
-				if mod.is_maxed(attributes[i]):
+				# # # START
+				if mod.StickerFusionHelper.is_attribute_capped(attributes[i]):
 					output_panel.no_result_text_override = "STICKER_FUSION_MAXED_ATTRIBUTES"
 					return null
-				if mod.is_upgradeable(attributes[i]):
+				if mod.StickerFusionHelper.is_attribute_scaleable(attributes[i]):
 					duplicate_attributes[attributes[i]] = attributes[j]
 					continue
-				# # #
+				# # # END
 				
 				output_panel.no_result_text_override = "STICKER_FUSION_DUPLICATE_ATTRIBUTES"
 				return null
 	
-	# # #
+	# # # START
 	for k in duplicate_attributes:
-		var _dupe_attr_a = k
-		var _dupe_attr_b = duplicate_attributes[k]
-		
-		if _dupe_attr_a and _dupe_attr_b in attributes:
-			mod.upgrade_attribute(attributes, _dupe_attr_a, _dupe_attr_b)
-	# # #
+		var dupe_attr_a = k
+		var dupe_attr_b = duplicate_attributes[k]
+		mod.StickerFusionHelper.upgrade_attribute(attributes, dupe_attr_a, dupe_attr_b)
+	# # # END
 	
 	if attributes.size() > MAX_ATTRIBUTES:
 		output_panel.no_result_text_override = "STICKER_FUSION_TOO_MANY_ATTRIBUTES"
 		return null
 		
-	# # #
+	# # # START
 	output.item.set_attributes(attributes)
-	# # #
+	# # # END
 	
 	return output if output.item else null
 
@@ -172,4 +173,3 @@ func _on_FuseButton_pressed():
 	$"%CurrencyBox".refresh()
 	yield(MenuHelper.give_item(new_sticker, 1, false), "completed")
 	grab_focus()
-	

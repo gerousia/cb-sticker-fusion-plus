@@ -13,14 +13,22 @@ static func patch():
 
 	var code_lines: Array = patched_script.source_code.split("\n")
 	var code_index: int = 0
-	
+
+	# # # var
+
 	code_index = code_lines.find("var exchange: Exchange")
 	if code_index >= 0:
-		code_lines.insert(code_index + 1, get_code("declare_mod"))
+		code_lines.insert(code_index + 1, get_code("init_mod"))
 		
-	code_index = code_lines.find("func fuse_stickers(a: ItemNode, a_attrib: Array, b: ItemNode, b_attrib: Array) -> ItemNode:")
+	code_index = code_lines.find("var exchange: Exchange")
 	if code_index >= 0:
-		code_lines.insert(code_index + 1, get_code("init_duplicate_attributes"))
+		code_lines.insert(code_index + 2, get_code("init_duplicate_attributes"))
+
+	# # # func fuse_stickers
+
+	code_index = code_lines.find("	output.item = a.item.duplicate()")
+	if code_index >= 0:
+		code_lines.insert(code_index + 1, get_code("reset_duplicate_attributes"))
 
 	code_index = code_lines.find("	output.item.set_attributes(attributes)")
 	if code_index >= 0:
@@ -37,6 +45,18 @@ static func patch():
 	code_index = code_lines.find("	if attributes.size() > MAX_ATTRIBUTES:")
 	if code_index >= 0:
 		code_lines.insert(code_index + 3, get_code("set_item_attributes"))
+	
+	# # # func update_output
+
+	code_index = code_lines.find("		exchange.markup_percent = 100 + 100 * output_panel.sticker.item.attributes.size()")
+	if code_index >= 0:
+		code_lines.insert(code_index + 1, get_code("markup_percent_multiplier"))
+
+	# # # func update_fuse_button
+
+	code_index = code_lines.find("""		$"%CostLabel".bbcode_text = exchange.get_cost_bbcode()""")
+	if code_index >= 0:
+		code_lines.insert(code_index + 1, get_code("fuse_button_text"))
 
 	patched_script.source_code = ""
 	for line in code_lines:
@@ -50,34 +70,52 @@ static func patch():
 static func get_code(block: String) -> String:
 	var code_blocks: Dictionary = {}
 	
-	code_blocks["declare_mod"] = """
+	# # # var
+
+	code_blocks["init_mod"] = """
 var mod = DLC.mods_by_id["mod_sticker_fusion_plus"]
 """
 	
 	code_blocks["init_duplicate_attributes"] = """
-	var duplicate_attributes: Dictionary = {}
+var duplicate_attributes: Dictionary
+"""
+
+	# # # func fuse_stickers
+
+	code_blocks["reset_duplicate_attributes"] = """
+	duplicate_attributes = {}
 """
 	
 	code_blocks["find_duplicate_attributes"] = """
-				if mod.is_maxed(attributes[i]):
+				if mod.StickerFusionHelper.is_attribute_capped(attributes[i]):
 					output_panel.no_result_text_override = "STICKER_FUSION_MAXED_ATTRIBUTES"
 					return null
-				if mod.is_upgradeable(attributes[i]):
+				if mod.StickerFusionHelper.is_attribute_scaleable(attributes[i]):
 					duplicate_attributes[attributes[i]] = attributes[j]
 					continue
 """
 	
 	code_blocks["modify_target_attributes"] = """
 	for k in duplicate_attributes:
-		var _dupe_attr_a = k
-		var _dupe_attr_b = duplicate_attributes[k]
-		
-		if _dupe_attr_a and _dupe_attr_b in attributes:
-			mod.upgrade_attribute(attributes, _dupe_attr_a, _dupe_attr_b)
+		var dupe_attr_a = k
+		var dupe_attr_b = duplicate_attributes[k]
+		mod.StickerFusionHelper.upgrade_attribute(attributes, dupe_attr_a, dupe_attr_b)
 """
 
 	code_blocks["set_item_attributes"] = """
 	output.item.set_attributes(attributes)
+"""
+
+	# # # func update_output
+
+	code_blocks["markup_percent_multiplier"] = """
+		exchange.markup_percent += 100 * mod.StickerFusionHelper.get_upgrade_cost_multiplier(duplicate_attributes)
+"""
+
+	# # # func update_fuse_button
+
+	code_blocks["fuse_button_text"] = """
+		$"%FuseButton".text = "STICKER_FUSION_FUSE_UPGRADE_BUTTON" if duplicate_attributes.size() > 0 else "STICKER_FUSION_FUSE_BUTTON"
 """
 
 	return code_blocks[block]
