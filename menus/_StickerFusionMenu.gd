@@ -98,34 +98,32 @@ func fuse_stickers(a: ItemNode, a_attrib: Array, b: ItemNode, b_attrib: Array) -
 			var attr_j = attributes[j].get_template()
 			if attr_i == attr_j:
 				
-				# # #
-				if mod.is_maxed(attributes[i]):
+				# # # START
+				if mod.StickerFusionHelper.is_attribute_capped(attributes[i]):
 					output_panel.no_result_text_override = "STICKER_FUSION_MAXED_ATTRIBUTES"
 					return null
-				if mod.is_upgradeable(attributes[i]):
+				if mod.StickerFusionHelper.is_attribute_scaleable(attributes[i]):
 					duplicate_attributes[attributes[i]] = attributes[j]
 					continue
-				# # #
+				# # # END
 				
 				output_panel.no_result_text_override = "STICKER_FUSION_DUPLICATE_ATTRIBUTES"
 				return null
 	
-	# # #
+	# # # START
 	for k in duplicate_attributes:
-		var _dupe_attr_a = k
-		var _dupe_attr_b = duplicate_attributes[k]
-		
-		if _dupe_attr_a and _dupe_attr_b in attributes:
-			mod.upgrade_attribute(attributes, _dupe_attr_a, _dupe_attr_b)
-	# # #
+		var dupe_attr_a = k
+		var dupe_attr_b = duplicate_attributes[k]
+		mod.StickerFusionHelper.upgrade_attribute(attributes, dupe_attr_a, dupe_attr_b)
+	# # # END
 	
 	if attributes.size() > MAX_ATTRIBUTES:
 		output_panel.no_result_text_override = "STICKER_FUSION_TOO_MANY_ATTRIBUTES"
 		return null
 		
-	# # #
+	# # # START
 	output.item.set_attributes(attributes)
-	# # #
+	# # # END
 	
 	return output if output.item else null
 

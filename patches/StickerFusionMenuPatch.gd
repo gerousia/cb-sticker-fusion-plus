@@ -24,8 +24,11 @@ static func patch():
 	if code_index >= 0:
 		code_lines.insert(code_index + 2, get_code("init_duplicate_attributes"))
 
+	# # # func fuse_stickers
+
+	code_index = code_lines.find("	output.item = a.item.duplicate()")
 	if code_index >= 0:
-		code_lines.insert(code_index + 1, get_code("init_duplicate_attributes"))
+		code_lines.insert(code_index + 1, get_code("reset_duplicate_attributes"))
 
 	code_index = code_lines.find("	output.item.set_attributes(attributes)")
 	if code_index >= 0:
@@ -65,24 +68,26 @@ var mod = DLC.mods_by_id["mod_sticker_fusion_plus"]
 var duplicate_attributes: Dictionary
 """
 
+	# # # func fuse_stickers
+
+	code_blocks["reset_duplicate_attributes"] = """
+	duplicate_attributes = {}
 """
 	
 	code_blocks["find_duplicate_attributes"] = """
-				if mod.is_maxed(attributes[i]):
+				if mod.StickerFusionHelper.is_attribute_capped(attributes[i]):
 					output_panel.no_result_text_override = "STICKER_FUSION_MAXED_ATTRIBUTES"
 					return null
-				if mod.is_upgradeable(attributes[i]):
+				if mod.StickerFusionHelper.is_attribute_scaleable(attributes[i]):
 					duplicate_attributes[attributes[i]] = attributes[j]
 					continue
 """
 	
 	code_blocks["modify_target_attributes"] = """
 	for k in duplicate_attributes:
-		var _dupe_attr_a = k
-		var _dupe_attr_b = duplicate_attributes[k]
-		
-		if _dupe_attr_a and _dupe_attr_b in attributes:
-			mod.upgrade_attribute(attributes, _dupe_attr_a, _dupe_attr_b)
+		var dupe_attr_a = k
+		var dupe_attr_b = duplicate_attributes[k]
+		mod.StickerFusionHelper.upgrade_attribute(attributes, dupe_attr_a, dupe_attr_b)
 """
 
 	code_blocks["set_item_attributes"] = """
