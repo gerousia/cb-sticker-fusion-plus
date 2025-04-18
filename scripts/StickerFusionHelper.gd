@@ -57,17 +57,45 @@ static func _copy_attribute(attribute: StickerAttribute) -> Resource:
 		output.amount = attribute.amount
 	return output;
 
-func upgrade_attribute(target_attrib: StickerAttribute, donor_attrib: StickerAttribute) -> void:
-	if target_attrib.get("chance_max"):
-		var high = max(target_attrib.chance, donor_attrib.chance)
-		var low = min(target_attrib.chance, donor_attrib.chance)
-		var new = ceil(high + (low * 0.10 * 2))
-		target_attrib.chance = clamp(new, target_attrib.chance_min, target_attrib.chance_max)  
-	if target_attrib.get("stat_value_max"):
-		var high = max(target_attrib.stat_value, donor_attrib.stat_value)
-		var low = min(target_attrib.stat_value, donor_attrib.stat_value)
-		var new = ceil(high + (low * 0.10 * 2))
-		target_attrib.stat_value = clamp(new, target_attrib.stat_value_min, target_attrib.stat_value_max)
+static func get_upgrade_cost_multiplier(attributes: Dictionary) -> int:
+	var cost: int = 0
+
+	for k in attributes:
+		var attr_a = k
+		var attr_b = attributes[k]
+
+		var weight: float = 0
+		var factor: float = 0
+
+		if attr_a.get("chance_max"):
+			weight = _get_scale_value(
+				min(attr_a.chance, attr_b.chance),
+				max(attr_a.chance, attr_b.chance),
+				attr_a.chance_min, 
+				attr_a.chance_max
+			)
+			factor = _get_scale_factor(weight, attr_a.get("chance_max"))
+
+		if attr_a.get("stat_value_max"):
+			weight = _get_scale_value(
+				min(attr_a.stat_value, attr_b.stat_value),
+				max(attr_a.stat_value, attr_b.stat_value),
+				attr_a.stat_value_min,
+				attr_a.stat_value_max
+			)
+			factor = _get_scale_factor(weight, attr_a.get("stat_value_max"))
+
+		cost += _snap_to_cost_interval(factor)
+
+	return cost
+
+static func _snap_to_cost_interval(factor: float) -> int:
+	if factor < 0:
+		return 0
+	return int(ceil(factor / 20.0))
+
 static func _get_scale_value(low: float, high: float, min_value: float, max_value: float) -> float:
 	return clamp(ceil(high + (low * 0.10 * 2)), min_value, max_value)
 	
+static func _get_scale_factor(value: float, max_value: float) -> float:
+	return ceil(100 * value / max_value)

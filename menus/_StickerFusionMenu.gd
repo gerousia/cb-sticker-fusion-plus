@@ -62,6 +62,7 @@ func update_output() -> void :
 		exchange.item = output_panel.sticker.item
 		exchange.max_amount = 1
 		exchange.markup_percent = 100 + 100 * output_panel.sticker.item.attributes.size()
+		exchange.markup_percent += 100 * mod.StickerFusionHelper.get_upgrade_cost_multiplier(duplicate_attributes)
 	else:
 		exchange = null
 	

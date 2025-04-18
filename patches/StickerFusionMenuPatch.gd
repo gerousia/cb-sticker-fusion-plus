@@ -46,6 +46,12 @@ static func patch():
 	if code_index >= 0:
 		code_lines.insert(code_index + 3, get_code("set_item_attributes"))
 
+	# # # func update_output
+
+	code_index = code_lines.find("		exchange.markup_percent = 100 + 100 * output_panel.sticker.item.attributes.size()")
+	if code_index >= 0:
+		code_lines.insert(code_index + 1, get_code("markup_percent_multiplier"))
+
 	patched_script.source_code = ""
 	for line in code_lines:
 		patched_script.source_code += line + "\n"
@@ -93,5 +99,12 @@ var duplicate_attributes: Dictionary
 	code_blocks["set_item_attributes"] = """
 	output.item.set_attributes(attributes)
 """
+
+	# # # func update_output
+
+	code_blocks["markup_percent_multiplier"] = """
+		exchange.markup_percent += 100 * mod.StickerFusionHelper.get_upgrade_cost_multiplier(duplicate_attributes)
+"""
+
 
 	return code_blocks[block]
