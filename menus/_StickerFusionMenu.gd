@@ -11,9 +11,10 @@ onready var output_panel = $"%FusionResultPanel"
 var output: ItemNode
 var exchange: Exchange
 
-# # #
+# # # START
 var mod = DLC.mods_by_id["mod_sticker_fusion_plus"]
-# # #
+var duplicate_attributes: Dictionary
+# # # END
 
 func _ready() -> void :
 	output = ItemNode.new()
@@ -89,7 +90,7 @@ func fuse_stickers(a: ItemNode, a_attrib: Array, b: ItemNode, b_attrib: Array) -
 	if attributes.size() == 0:
 		return null
 		
-	var duplicate_attributes: = {} # target: donor
+	duplicate_attributes = {}
 	
 	for i in range(attributes.size()):
 		var attr_i = attributes[i].get_template()

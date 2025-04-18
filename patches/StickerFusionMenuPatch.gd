@@ -13,12 +13,17 @@ static func patch():
 
 	var code_lines: Array = patched_script.source_code.split("\n")
 	var code_index: int = 0
+
+	# # # var
 	
 	code_index = code_lines.find("var exchange: Exchange")
 	if code_index >= 0:
-		code_lines.insert(code_index + 1, get_code("declare_mod"))
+		code_lines.insert(code_index + 1, get_code("init_mod"))
 		
-	code_index = code_lines.find("func fuse_stickers(a: ItemNode, a_attrib: Array, b: ItemNode, b_attrib: Array) -> ItemNode:")
+	code_index = code_lines.find("var exchange: Exchange")
+	if code_index >= 0:
+		code_lines.insert(code_index + 2, get_code("init_duplicate_attributes"))
+
 	if code_index >= 0:
 		code_lines.insert(code_index + 1, get_code("init_duplicate_attributes"))
 
@@ -50,12 +55,16 @@ static func patch():
 static func get_code(block: String) -> String:
 	var code_blocks: Dictionary = {}
 	
-	code_blocks["declare_mod"] = """
+	# # # var
+
+	code_blocks["init_mod"] = """
 var mod = DLC.mods_by_id["mod_sticker_fusion_plus"]
 """
 	
 	code_blocks["init_duplicate_attributes"] = """
-	var duplicate_attributes: Dictionary = {}
+var duplicate_attributes: Dictionary
+"""
+
 """
 	
 	code_blocks["find_duplicate_attributes"] = """
