@@ -1,12 +1,13 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=3 format=2]
 
-[ext_resource path="res://mods/sticker_fusion_plus/Mod.gd" type="Script" id=1]
+[ext_resource path="res://mods/sticker_fusion_upgrade/Mod.gd" type="Script" id=1]
+[ext_resource path="res://mods/sticker_fusion_upgrade/translations/mod.en.translation" type="Translation" id=2]
 
 [resource]
 script = ExtResource( 1 )
-id = "mod_sticker_fusion_plus"
-name = "Sticker Fusion Plus"
-version_code = 0
+id = "mod_sticker_fusion_upgrade"
+name = "Sticker Fusion Upgrade"
+version_code = 1
 version_string = "1.0"
 author = "Gerousia"
 save_file_format_tag = ""
@@ -15,4 +16,4 @@ network_protocol_tag = ""
 disable_network_multiplayer = false
 modified_files = [ "res://menus/sticker_fusion/StickerFusionMenu.gd" ]
 modified_dirs = [  ]
-translations = [  ]
+translations = [ ExtResource( 2 ) ]

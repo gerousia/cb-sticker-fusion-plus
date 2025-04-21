@@ -1,9 +1,9 @@
 static func patch():
 	var script_path = "res://menus/sticker_fusion/StickerFusionMenu.gd"
-	var patched_script : GDScript = preload("res://menus/sticker_fusion/StickerFusionMenu.gd")
+	var patched_script: GDScript = preload("res://menus/sticker_fusion/StickerFusionMenu.gd")
 
 	if !patched_script.has_source_code():
-		var file : File = File.new()
+		var file: File = File.new()
 		var err = file.open(script_path, File.READ)
 		if err != OK:
 			push_error("Check that %s is included in Modified Files"% script_path)
@@ -73,7 +73,7 @@ static func get_code(block: String) -> String:
 	# # # var
 
 	code_blocks["init_mod"] = """
-var mod = DLC.mods_by_id["mod_sticker_fusion_plus"]
+var mod = DLC.mods_by_id["mod_sticker_fusion_upgrade"]
 """
 	
 	code_blocks["init_duplicate_attributes"] = """
@@ -88,6 +88,7 @@ var duplicate_attributes: Dictionary
 	
 	code_blocks["find_duplicate_attributes"] = """
 				if mod.StickerFusionHelper.is_attribute_capped(attributes[i]):
+					duplicate_attributes[attributes[i]] = attributes[j]
 					output_panel.no_result_text_override = "STICKER_FUSION_MAXED_ATTRIBUTES"
 					return null
 				if mod.StickerFusionHelper.is_attribute_scaleable(attributes[i]):
@@ -96,10 +97,9 @@ var duplicate_attributes: Dictionary
 """
 	
 	code_blocks["modify_target_attributes"] = """
-	for k in duplicate_attributes:
-		var dupe_attr_a = k
-		var dupe_attr_b = duplicate_attributes[k]
-		mod.StickerFusionHelper.upgrade_attribute(attributes, dupe_attr_a, dupe_attr_b)
+	for dupe_attr_a in duplicate_attributes:
+		var dupe_attr_b = duplicate_attributes[dupe_attr_a]
+		mod.StickerFusionHelper.merge_attributes(attributes, dupe_attr_a, dupe_attr_b)
 """
 
 	code_blocks["set_item_attributes"] = """
@@ -109,7 +109,7 @@ var duplicate_attributes: Dictionary
 	# # # func update_output
 
 	code_blocks["markup_percent_multiplier"] = """
-		exchange.markup_percent += 100 * mod.StickerFusionHelper.get_upgrade_cost_multiplier(duplicate_attributes)
+		exchange.markup_percent += mod.StickerFusionHelper.get_upgrade_cost(duplicate_attributes)
 """
 
 	# # # func update_fuse_button
