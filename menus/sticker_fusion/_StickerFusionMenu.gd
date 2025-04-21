@@ -55,7 +55,7 @@ func _on_select_sticker_pressed(index: int):
 
 func update_output() -> void :
 	output_panel.sticker = fuse_stickers(input_panels[0].sticker, input_panels[0].selected_attributes, input_panels[1].sticker, input_panels[1].selected_attributes)
-	
+
 	if output_panel.sticker:
 		exchange = SimpleExchangeWithMarkup.new()
 		exchange.currency = FusedMaterial
@@ -69,10 +69,11 @@ func update_output() -> void :
 	update_fuse_button()
 
 func update_fuse_button() -> void :
+	$"%FuseButton".text = "STICKER_FUSION_FUSE_UPGRADE_BUTTON" if duplicate_attributes.size() > 0 else "STICKER_FUSION_FUSE_BUTTON" # # #
+	
 	if exchange:
 		$"%FuseButton".disabled = false
 		$"%CostLabel".bbcode_text = exchange.get_cost_bbcode()
-		$"%FuseButton".text = "STICKER_FUSION_FUSE_UPGRADE_BUTTON" if duplicate_attributes.size() > 0 else "STICKER_FUSION_FUSE_BUTTON" # # #
 	else:
 		$"%FuseButton".disabled = true
 		$"%CostLabel".bbcode_text = ""

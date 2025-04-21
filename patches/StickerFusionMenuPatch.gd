@@ -26,9 +26,9 @@ static func patch():
 
 	# # # func fuse_stickers
 
-	code_index = code_lines.find("	output.item = a.item.duplicate()")
+	code_index = code_lines.find("	var attributes: = []")
 	if code_index >= 0:
-		code_lines.insert(code_index + 1, get_code("reset_duplicate_attributes"))
+		code_lines.insert(code_index - 1, get_code("reset_duplicate_attributes"))
 
 	code_index = code_lines.find("	output.item.set_attributes(attributes)")
 	if code_index >= 0:
@@ -54,7 +54,7 @@ static func patch():
 
 	# # # func update_fuse_button
 
-	code_index = code_lines.find("""		$"%CostLabel".bbcode_text = exchange.get_cost_bbcode()""")
+	code_index = code_lines.find("func update_fuse_button() -> void :")
 	if code_index >= 0:
 		code_lines.insert(code_index + 1, get_code("fuse_button_text"))
 
@@ -115,7 +115,7 @@ var duplicate_attributes: Dictionary
 	# # # func update_fuse_button
 
 	code_blocks["fuse_button_text"] = """
-		$"%FuseButton".text = "STICKER_FUSION_FUSE_UPGRADE_BUTTON" if duplicate_attributes.size() > 0 else "STICKER_FUSION_FUSE_BUTTON"
+	$"%FuseButton".text = "STICKER_FUSION_FUSE_UPGRADE_BUTTON" if duplicate_attributes.size() > 0 else "STICKER_FUSION_FUSE_BUTTON"
 """
 
 	return code_blocks[block]
