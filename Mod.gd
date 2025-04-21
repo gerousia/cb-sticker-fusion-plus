@@ -1,7 +1,7 @@
 extends ContentInfo
 
-const StickerFusionHelper = preload("res://mods/sticker_fusion_plus/scripts/StickerFusionHelper.gd")
-const StickerFusionMenuPatch = preload("res://mods/sticker_fusion_plus/patches/StickerFusionMenuPatch.gd")
+const StickerFusionMenu = preload("res://mods/sticker_fusion_upgrade/patches/StickerFusionMenuPatch.gd")
+const StickerFusionHelper = preload("res://mods/sticker_fusion_upgrade/scripts/StickerFusionHelper.gd")
 
 func _init():
-	StickerFusionMenuPatch.patch()
+	StickerFusionMenu.patch()	
