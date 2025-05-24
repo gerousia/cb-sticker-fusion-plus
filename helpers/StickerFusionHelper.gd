@@ -67,7 +67,7 @@ static func get_upgrade_cost(duplicates: Dictionary) -> int:
 					attr_a[max_key]
 				)
 				var scaled_factor = _get_scale_factor(scaled_value, attr_a.get("rarity"), attr_a.get(max_key))
-				cost += _get_interval_value(scaled_factor) * 0.5 # # # Too Expensive
+				cost += int(_get_interval_value(scaled_factor) * 0.5) # # # Too Expensive
  
 	return 100 * cost
 

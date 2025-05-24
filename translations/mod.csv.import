@@ -5,10 +5,10 @@ type="Translation"
 
 [deps]
 
-files=[ "res://mods/sticker_fusion_upgrade/translations/mod.en.translation" ]
+files=[ "res://mods/cb_sticker_fusion_plus/translations/mod.en.translation" ]
 
-source_file="res://mods/sticker_fusion_upgrade/translations/mod.csv"
-dest_files=[ "res://mods/sticker_fusion_upgrade/translations/mod.en.translation" ]
+source_file="res://mods/cb_sticker_fusion_plus/translations/mod.csv"
+dest_files=[ "res://mods/cb_sticker_fusion_plus/translations/mod.en.translation" ]
 
 [params]
 
