@@ -1,14 +1,14 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
-[ext_resource path="res://mods/sticker_fusion_upgrade/Mod.gd" type="Script" id=1]
-[ext_resource path="res://mods/sticker_fusion_upgrade/translations/mod.en.translation" type="Translation" id=2]
+[ext_resource path="res://mods/cb_sticker_fusion_plus/Mod.gd" type="Script" id=1]
+[ext_resource path="res://mods/cb_sticker_fusion_plus/translations/mod.en.translation" type="Translation" id=2]
 
 [resource]
 script = ExtResource( 1 )
-id = "mod_sticker_fusion_upgrade"
-name = "Sticker Fusion Upgrade"
-version_code = 1
-version_string = "1.0"
+id = "mod_sticker_fusion_plus"
+name = "Sticker Fusion Plus"
+version_code = 2
+version_string = "1.1"
 author = "Gerousia"
 save_file_format_tag = ""
 save_file_format_tag_version = 0

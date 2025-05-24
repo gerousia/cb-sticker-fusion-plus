@@ -1,31 +1,58 @@
-# Cassette Beasts – Sticker Fusion Upgrade Mod
+<p align="center">
+  <img src="https://www.cassettebeasts.com/wp-content/uploads/2021/10/CassetteBeasts_Logo.png" alt="Cassette Beasts Official Logo" width="330" height="200">
+</p>
 
-This mod enhances sticker fusion by upgrading sticker attributes through a merging system, in exchange for a higher markup cost.
+<h3 align="center">Cassette Beasts – Sticker Fusion Plus Mod</h3>
 
-### Upgrade Logic
+<p align="center">
+  <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3467880204" target="_blank">
+    <img src="https://steamcommunity.com/favicon.ico" width="16" style="vertical-align:middle;"> <span>Steam Workshop</span>
+  </a> 
+  • 
+  <a href="https://modworkshop.net/mod/51803" target="_blank">
+    <img src="https://modworkshop.net/favicon.ico" width="16" style="vertical-align:middle;"> <span>ModWorkshop</span>
+  </a>
+</p>
 
-The system compares two values — the `Base` and the `Source` — and selects the higher of the two. 
+<p align="center">
+  <strong>Merge</strong> sticker attributes instead, upgrading them in exchange for a higher markup cost.
+</p>
 
-It merges the lower value using a non-linear growth formula that applies diminishing returns, scaling near the maximum threshold.
+---
 
-```
-NewValue = HigherValue + (LowerValue * (1 - HigherValue / MaxValue)) * Rate
-```
+## Features
 
-As the `HigherValue` approaches `MaxValue`, the impact from the `LowerValue` gradually decreases, maintaining balance at later stages.
+- **Merge Attributes**  
 
-### Cost Calculation
+  The system compares two values—`Base` and `Source` Stickers—and selects the `higher` one. 
+  
+  Before adding the `lower`, a diminishing returns formula is applied based on how close the `higher` is to the attribute’s `max`, scaled non-linearly and multiplied by a `rate`.
+  
+  ```Python
+  result = Higher + (Lower * (1 - Higher / Max)) * Rate
+  ```
 
-Increased based on proximity to the `MaxValue` and `Rarity` of the attribute being upgraded.
+  The `lower` gradually decreases as the `higher` approaches the attribute's `max` to maintain balance at later stages.
 
-```
-Cost = 100 * (ResultValue / MaxValue) * Rarity
-TotalCost += Cost / Interval * 0.5
-```
+- **Scaling Cost**  
+  
+  `cost` scales with the `result` proximity to the attribute's `max` and is adjusted by the attribute's `rarity`.
 
-Costs are calculated in 20-unit intervals to provide smoother progression pacing.
+  ```Python
+  Cost = 100 * (Result / Max) * Rarity
+  ```
 
-### Metadata
-- Mod ID: `mod_sticker_fusion_upgrade`
-- Save File Tags: `none` (safe to remove)
-- Netplay Tags: `none`
+  It is then divided into 20-unit `interval` and halved to ensure smoother progression.
+
+  ```Python
+  Total += Cost / Interval * 0.5
+  ```
+
+- **Non-intrusive**  
+  Does not modify core gameplay or existing save data.
+
+## Metadata
+
+- **Mod ID:** `mod_sticker_fusion_plus`
+- **Save File Tags:** `none`
+- **Netplay Tags:** `none`
