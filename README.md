@@ -29,7 +29,7 @@
   Before adding the `lower`, a diminishing returns formula is applied based on how close the `higher` is to the attribute’s `max`, scaled non-linearly and multiplied by a `rate`.
   
   ```Python
-  result = Higher + (Lower * (1 - Higher / Max)) * Rate
+  Result = Higher + (Lower * (1 - Higher / Max)) * Rate
   ```
 
   The `lower` gradually decreases as the `higher` approaches the attribute's `max` to maintain balance at later stages.
