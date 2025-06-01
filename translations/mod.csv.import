@@ -5,10 +5,10 @@ type="Translation"
 
 [deps]
 
-files=[ "res://mods/cb_sticker_fusion_plus/translations/mod.en.translation" ]
+files=[ "res://mods/cb_sticker_fusion_plus/translations/mod.en.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.de_DE.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.eo.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.es_ES.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.es_MX.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.fr_FR.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.it_IT.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.ja_JP.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.ko_KR.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.pt_BR.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.zh_CN.translation" ]
 
 source_file="res://mods/cb_sticker_fusion_plus/translations/mod.csv"
-dest_files=[ "res://mods/cb_sticker_fusion_plus/translations/mod.en.translation" ]
+dest_files=[ "res://mods/cb_sticker_fusion_plus/translations/mod.en.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.de_DE.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.eo.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.es_ES.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.es_MX.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.fr_FR.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.it_IT.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.ja_JP.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.ko_KR.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.pt_BR.translation", "res://mods/cb_sticker_fusion_plus/translations/mod.zh_CN.translation" ]
 
 [params]
 

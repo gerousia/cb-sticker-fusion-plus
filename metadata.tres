@@ -1,12 +1,22 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=13 format=2]
 
 [ext_resource path="res://mods/cb_sticker_fusion_plus/Mod.gd" type="Script" id=1]
 [ext_resource path="res://mods/cb_sticker_fusion_plus/translations/mod.en.translation" type="Translation" id=2]
+[ext_resource path="res://mods/cb_sticker_fusion_plus/translations/mod.ja_JP.translation" type="Translation" id=3]
+[ext_resource path="res://mods/cb_sticker_fusion_plus/translations/mod.ko_KR.translation" type="Translation" id=4]
+[ext_resource path="res://mods/cb_sticker_fusion_plus/translations/mod.de_DE.translation" type="Translation" id=5]
+[ext_resource path="res://mods/cb_sticker_fusion_plus/translations/mod.eo.translation" type="Translation" id=6]
+[ext_resource path="res://mods/cb_sticker_fusion_plus/translations/mod.pt_BR.translation" type="Translation" id=7]
+[ext_resource path="res://mods/cb_sticker_fusion_plus/translations/mod.es_MX.translation" type="Translation" id=8]
+[ext_resource path="res://mods/cb_sticker_fusion_plus/translations/mod.it_IT.translation" type="Translation" id=9]
+[ext_resource path="res://mods/cb_sticker_fusion_plus/translations/mod.zh_CN.translation" type="Translation" id=10]
+[ext_resource path="res://mods/cb_sticker_fusion_plus/translations/mod.es_ES.translation" type="Translation" id=11]
+[ext_resource path="res://mods/cb_sticker_fusion_plus/translations/mod.fr_FR.translation" type="Translation" id=12]
 
 [resource]
 script = ExtResource( 1 )
 id = "mod_sticker_fusion_plus"
-name = "Sticker Fusion Plus"
+name = "Sticker Fusion+"
 version_code = 2
 version_string = "1.1"
 author = "Gerousia"
@@ -16,4 +26,4 @@ network_protocol_tag = ""
 disable_network_multiplayer = false
 modified_files = [ "res://menus/sticker_fusion/StickerFusionMenu.gd" ]
 modified_dirs = [  ]
-translations = [ ExtResource( 2 ) ]
+translations = [ ExtResource( 2 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 11 ), ExtResource( 8 ), ExtResource( 12 ), ExtResource( 9 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 10 ) ]
