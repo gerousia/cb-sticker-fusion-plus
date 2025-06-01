@@ -1,3 +1,3 @@
-key,en
-STICKER_FUSION_MAXED_ATTRIBUTES,Attribute Already Maxed.
-STICKER_FUSION_FUSE_UPGRADE_BUTTON,Upgrade
+key,en,de_DE,eo,es_ES,es_MX,fr_FR,it_IT,ja_JP,ko_KR,pt_BR,zh_CN
+STICKER_FUSION_MAXED_ATTRIBUTES,"Maxed — Cannot Upgrade","Maximal — Keine Verbesserung","Maksimuma — Ne Plibonigebla","Máximo — Sin Mejora","Máximo — Sin Mejora","Maxé — Impossible à Améliorer","Massimo — Impossibile Migliorare","最大 — 強化不可","최대 — 강화 불가","Máximo — Não É Possível Melhorar","已满 — 无法升级"
+STICKER_FUSION_FUSE_UPGRADE_BUTTON,Upgrade,Verbessern,Plibonigi,Mejorar,Mejorar,Améliorer,Migliora,強化,업그레이드,Melhorar,升级
